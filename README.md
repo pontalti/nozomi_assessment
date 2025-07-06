@@ -3,7 +3,7 @@
 
 ## 1. Write an algorithm (choose the language you prefer) that given a string of characters, for example {'c','a','i','o','p','a'}, will print out the list of characters appearing at least 2 times. In this specific example, it would return {'a'}. Afterwards, comment out the cost in terms of space and time.
 
-- 📘 **For a comprehensive explanation of question 1, please consult the [question_1.md](.question_1.md) file.**
+- 📘 **For a comprehensive explanation of question 1, please consult the [question_1.md](/question_1.md) file.**
 
 ---
 
