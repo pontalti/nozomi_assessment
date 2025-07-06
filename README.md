@@ -1,159 +1,137 @@
-# 🔍 Character Frequency Analyzer in Java
 
-This repository contains two Java implementations to detect characters that appear **at least twice** in a given character array:
+# Assessment Q&A
 
-- ✅ `CharacterFrequencySimpleVersion`: a straightforward, single-threaded version.
-- 🚀 `CharacterFrequencyVTVersion`: an optimized, high-performance version leveraging **Java Virtual Threads** and concurrent processing.
+## 1. Write an algorithm (choose the language you prefer) that given a string of characters, for example {'c','a','i','o','p','a'}, will print out the list of characters appearing at least 2 times. In this specific example, it would return {'a'}. Afterwards, comment out the cost in terms of space and time.
 
----
-
-## 📊 Comparison: Simple vs VirtualThreads
-
-| Feature                       | Simple Version                         | VirtualThreads Version                          |
-|------------------------------|----------------------------------------|-------------------------------------------------|
-| **Concurrency**              | No                                     | Yes (Virtual Threads with parallel merging)     |
-| **Performance on small data**| Fast and sufficient                    | Slightly more overhead                          |
-| **Performance on large data**| ❌ Not scalable                         | ✅ Optimized for large inputs                    |
-| **Thread Safety**            | Not applicable                         | Uses `ConcurrentHashMap`                        |
-| **Parallelism**              | None                                   | Parallel chunk processing and merging           |
-| **Error handling**           | Minimal                                | Robust with `Future.get()` handling             |
-| **Output formatting**        | Raw `Set` output                       | Sorted and formatted with braces and quotes     |
+- 📘 **For a comprehensive explanation of question 1, please consult the [question_1.md](./question_1.md) file.**
 
 ---
 
-## 📘 Documentation Overview
+## 2. What is a unit test? And an integration test? What is the difference? What about a system test?
 
-### `CharacterFrequencySimpleVersion`
+- **Unit Test**: Tests a single component (e.g., method or class) in isolation from the rest of the system. It ensures that the smallest parts of the application behave as expected.
+- **Integration Test**: Tests the interaction between multiple components or modules to ensure they work together correctly.
+- **System Test**: Validates the entire application as a whole, ensuring that all integrated parts function correctly in the complete environment.
 
-- ✅ Easy to read and understand
-- ✅ Great for short input arrays
-- ❌ Not suitable for billions of characters or CPU-intensive contexts
+**Difference**: Unit tests are focused on individual parts in isolation, integration tests check how components interact, and system tests verify the entire system's functionality.
+
+---
+
+## 3. Do you know design patterns? Describe one briefly.
+
+Yes. One commonly used design pattern is the **Builder Pattern**.
+
+- **Builder Pattern**: It separates the construction of a complex object from its representation, allowing the same construction process to create different representations.
+
+### Example:
 
 ```java
-/**
- * Counts character frequency in a single-threaded approach.
- * 
- * Time Complexity: O(N)
- * Space Complexity: O(K)
- * Where:
- *  N = number of characters
- *  K = number of unique characters
- */
+public class User {
+    private final String name;
+    private final int age;
+
+    private User(Builder builder) {
+        this.name = builder.name;
+        this.age = builder.age;
+    }
+
+    public static class Builder {
+        private String name;
+        private int age;
+
+        public Builder name(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public Builder age(int age) {
+            this.age = age;
+            return this;
+        }
+
+        public User build() {
+            return new User(this);
+        }
+    }
+}
 ```
 
-### `CharacterFrequencyVTVersion`
-
-- ✅ Designed for scalability
-- ✅ Leverages Virtual Threads for concurrent chunk processing
-- ✅ Uses `ConcurrentHashMap.merge` to handle merging safely
+Usage:
 
 ```java
-/**
- * Analyzes character frequencies using Java Virtual Threads.
- * 
- * Time Complexity: O(N/P + K)
- *   - N = total characters
- *   - P = available processors / threads
- *   - K = number of unique characters
- *
- * Space Complexity: O(numChunks * K_chunk + K_global)
- */
+User user = new User.Builder().name("Alice").age(30).build();
 ```
 
 ---
 
-## 🛠️ How to Compile and Run
+## 4. Describe the pros and cons of writing a multi-process vs a multi-thread application
 
-Both classes are written in **Java 21+** and require a compatible JDK installed.
+### Multi-threaded Application:
 
-### 📦 Requirements
+**Pros:**
+- Lower memory usage (shared memory space).
+- Faster context switching compared to processes.
+- Easier communication via shared memory.
 
-- Java 21 or later
-- Terminal or command prompt
-- `javac` and `java` available in your system `PATH`
+**Cons:**
+- Prone to race conditions and deadlocks.
+- Difficult to debug and maintain.
+- One thread crashing can bring down the entire process.
 
----
+### Multi-process Application:
 
-### ⚙️ Compile the Source
+**Pros:**
+- Better isolation (one process crash doesn't affect others).
+- Easier to scale across CPU cores.
+- More secure (separate memory space).
 
-Assuming the sources are under `assessment/`:
-
-```bash
-javac -d out CharacterFrequencySimpleVersion.java CharacterFrequencyVTVersion.java
-```
-
----
-
-### ▶️ Run the Simple Version
-
-#### Without parameters:
-```bash
-java -cp out CharacterFrequencySimpleVersion
-```
-
-#### With parameters:
-```bash
-java -cp out CharacterFrequencySimpleVersion hello world test
-```
+**Cons:**
+- More memory consumption.
+- Higher overhead for inter-process communication.
+- Slower context switching.
 
 ---
 
-### 🚀 Run the VirtualThreads Version
+## 5. What's the most boring thing about your job? And what's the most satisfying?
 
-#### Without parameters:
-```bash
-java -cp out CharacterFrequencyVTVersion
-```
+**What's the most boring thing about your job?**
 
-#### With parameters:
-```bash
-java -cp out CharacterFrequencyVTVersion hello world test
-```
+While I genuinely enjoy working as a Java back-end developer, one of the more monotonous aspects of the role can be dealing with repetitive boilerplate code or maintaining legacy systems. These tasks can feel less stimulating at times, especially when the work doesn't immediately translate into visible improvements.
 
----
+That said, I see even these situations as opportunities — whether it's identifying areas to refactor, proposing improvements, or automating recurring patterns. They often lead to long-term benefits for the team and the codebase.
 
-## 🧪 Example simple version Output without parameters
+**What's the most satisfying?**
 
-```text
-java -cp out CharacterFrequencySimpleVersion
-Characters appearing at least twice: [a]
-Execution time for 6 characters - 7 Millis
-```
+The most fulfilling part of my job is designing and delivering robust, scalable back-end solutions that make a real difference in system performance and reliability. I take pride in solving complex technical problems, mentoring junior developers, and seeing how a well-architected back-end contributes to the overall success of a product.
 
-## 🧪 Example simple version Output with parameters
-
-```text
-java -cp out CharacterFrequencySimpleVersion hello world test
-Characters appearing at least twice: [t, e, l, o]
-Execution time for 14 characters - 6 Millis
-```
-
-## 🧪 Example VTVersion Output without parameters
-
-```text
-java -cp out CharacterFrequencyVTVersion
---- Example_1 ---
-Characters appearing at least 2 times (Virtual Threads): {'a'}
-Example_1 execution time for 6 characters - 44 Millis
-
---- Executing example_2 with a very long string to demonstrate Virtual Threads potential ---
-Characters appearing at least 2 times (Virtual Threads): {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'}
-Example_2 execution time for 1000000000 characters - 6624 Millis
-```
-
-## 🧪 Example VTVersion Output with parameters
-
-```text
-java -cp out CharacterFrequencyVTVersion hello world test
---- Example_1 ---
-Characters appearing at least 2 times (Virtual Threads): {'t', 'e', 'l', 'o'}
-Example_1 execution time for 14 characters - 49 Millis
-
---- Executing example_2 with a very long string to demonstrate Virtual Threads potential ---
-Characters appearing at least 2 times (Virtual Threads): {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'}
-Example_2 execution time for 1000000000 characters - 6529 Millis
-```
-
-> ⏱ Execution time may vary based on your machine's specs.
+Knowing that my work enables other teams to move faster and customers to have a better experience is highly rewarding.
 
 ---
+
+## 6. Explain and comment this Dockerfile
+
+This Dockerfile demonstrates how to:
+- Generate a file with secure random content.
+- Clean up files through a scripted removal.
+- Use multi-stage shell scripting inside a Docker image.
+
+```dockerfile
+# Use Bitnami's lightweight Debian-based image as the base
+FROM bitnami/minideb:latest
+
+# Create a temporary authentication file with 32 random printable characters
+RUN bash -c "echo "$(< /dev/urandom tr -cd '[:print:]' | head -c 32; echo)" > /tmp/auth"
+
+# Create a script named remove on / that will delete the /tmp/auth file if it exists
+RUN <<EOF cat > /remove
+#!/usr/bin/env bash
+test -f /tmp/auth && rm -f /tmp/auth
+EOF
+
+# Make the remove script executable and run it to delete /tmp/auth
+RUN chmod +x /remove; \
+    bash /remove
+
+# Set the default command to print "done" when the container starts
+CMD ["/usr/bin/echo", "done"]
+```
